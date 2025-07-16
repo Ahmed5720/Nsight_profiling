@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MetricsEnumerator",
+  "description": "Metrics Enumeration Tool",
+  "type": "object",
+  "properties": {
+    "chipName": {
+      "type": "string"
+    },
+    "CROP": {
+      "type": ["object", "null"],
+      "properties": {
+        "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {"type": ["string", "null"]},
+              "type": {"type": ["string", "null"]},
+              "description": {"type": ["string", "null"]},
+              "dimensional_units": {"type": ["string", "null"]}
+            }
+          }
+      }
+    }
+  }
+}

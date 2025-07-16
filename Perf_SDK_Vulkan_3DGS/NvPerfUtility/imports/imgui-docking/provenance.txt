@@ -1,0 +1,8 @@
+Taken from imgui's docking branch: https://github.com/ocornut/imgui/tree/docking.
+Date: 2024.3.1
+
+
+Extra info on branching from its readme file:
+    Q: Which version should I get?
+
+    A: We occasionally tag Releases (with nice releases notes) but it is generally safe and recommended to sync to latest master or docking branch. The library is fairly stable and regressions tend to be fixed fast when reported. Advanced users may want to use the docking branch with Multi-Viewport and Docking features. This branch is kept in sync with master regularly.
