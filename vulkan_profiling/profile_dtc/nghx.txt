@@ -1,0 +1,221 @@
+NVIDIA Nsight Graphics [general_options] [activity_options]:
+
+Help options:
+  --help                                Display help on general command-line 
+                                        options
+  --help-all                            Display help on general and all 
+                                        activity command-line options
+  --version                             Display tool version
+
+General Options:
+  --hostname arg                        Host name of remote connection
+  --project arg                         Nsight project file to load
+  --output-dir arg                      Output folder to export/write data to
+  --activity arg                        Target activity to use, should be one 
+                                        of:
+                                          Frame Debugger
+                                          Generate C++ Capture
+                                          GPU Trace Profiler
+                                        
+  --platform arg                        Target platform to use, should be one 
+                                        of:
+                                          Linux (x86_64)
+                                        
+  --launch-detached                     Run as a command line launcher, exit 
+                                        after launching application
+  --attach-pid arg                      PID to connect to
+  --verbose                             Enable verbose mode
+  --no-timeout                          By default operations (e.g., launch) 
+                                        are bound to proper timeouts, disable 
+                                        timeouts if some applications can take 
+                                        a long time to perform operations
+  --exe arg                             Executable path to be launched with the
+                                        tool injected
+  --dir arg                             Working directory of launched 
+                                        application
+  --args arg                            Command-line arguments of launched 
+                                        application
+  --env arg                             Environment variables of launched 
+                                        application, should be in the form of 
+                                        "FOO=1; BAR=0;"
+  --ssh-user arg                        User name of SSH remote connection
+  --ssh-pwd arg                         Password of SSH remote connection
+  --ssh-port arg                        Port of SSH remote connection
+
+Frame Debugger activity options:
+  --wait-frames arg                     Wait in frames before capturing a frame
+  --wait-seconds arg                    Wait in time (seconds) before capturing
+                                        a frame
+  --wait-hotkey                         The capture is expected to be triggered
+                                        by pressing (CTRL+Z and spacebar) 
+                                        hotkey on the running application. If 
+                                        enabled, the option about waiting in 
+                                        seconds would be ignored
+
+Generate C++ Capture activity options:
+  --wait-frames arg                     Wait in frames before capturing a frame
+  --wait-seconds arg                    Wait in time (seconds) before capturing
+                                        a frame
+  --wait-hotkey                         The capture is expected to be triggered
+                                        by pressing (CTRL+Z and spacebar) 
+                                        hotkey on the running application. If 
+                                        enabled, the option about waiting in 
+                                        seconds would be ignored
+
+GPU Trace Profiler activity options:
+  --start-after-frames arg              Wait N frames before generating GPU 
+                                        trace. Mutually exclusive with other 
+                                        start options.
+  --start-after-submits arg             Wait N submits before generating GPU 
+                                        trace. Mutually exclusive with other 
+                                        start options.
+  --start-after-ms arg                  Wait N milliseconds before generating 
+                                        GPU trace. Mutually exclusive with 
+                                        other start options.
+  --start-after-hotkey                  The trace is expected to be initiated 
+                                        by pressing the trigger hotkey (default
+                                        F11) on the running application. 
+                                        Mutually exclusive with other start 
+                                        options.
+  --max-duration-ms arg (=1000)         The maximum duration of the trace in 
+                                        milliseconds.
+  --limit-to-frames arg                 Trace a maximum of N frames (also 
+                                        limited by duration). Mutually 
+                                        exclusive with other limit-to options.
+  --limit-to-submits arg                Trace a maximum of N submits (also 
+                                        limited by duration). Mutually 
+                                        exclusive with other limit-to options.
+  --allocated-event-buffer-memory-kb arg (=5000)
+                                        The amount of event buffer memory (kB) 
+                                        to allocate per API device.
+  --allocated-timestamps arg (=100000)  The number of timestamps to allocate 
+                                        per API device.
+  --auto-export                         Automatically export metrics data after
+                                        generating GPU trace.
+  --per-arch-config-path arg            Path to a json file that contains per 
+                                        architecture configuration. The file 
+                                        should be structured as a top level 
+                                        array containing objects that specify 
+                                        an "architecture" and "metric-set-name"
+                                        or "metric-set-id", for example:
+                                        [
+                                          {
+                                            "architecture": "Turing",
+                                            "metric-set-name": "Throughput 
+                                        Metrics"
+                                            "multi-pass-metrics": "true"
+                                          },
+                                          {
+                                            "architecture": "Ampere GA10x",
+                                            "metric-set-id": "0"
+                                            "real-time-shader-profiler": "true"
+                                          }
+                                        ]
+  --architecture arg                    Selects which architecture the 
+                                        arch-specific options configure. To 
+                                        configure more than one, use 
+                                        --per-arch-config-path to specify a 
+                                        path to a json file with 
+                                        per-architecture configuration. 
+                                        Available architectures:
+                                          Turing
+                                          Ampere GA10x
+                                          Orin GA10B
+                                          Ada
+                                        
+  --metric-set-name arg                 The metric set name (case sensitive), 
+                                        choose either metric-set-name or 
+                                        metric-set-id, must also specify 
+                                        architecture this applies to.
+  --metric-set-id arg                   Index of metric set to use, choose 
+                                        either metric-set-name or 
+                                        metric-set-id, must also specify 
+                                        architecture this applies to:
+                                          Turing
+                                            0-Throughput Metrics
+                                          Ampere GA10x
+                                            0-Throughput Metrics
+                                            1-Async Compute Triage
+                                            2-Top-Level Triage
+                                          Orin GA10B
+                                            0-Throughput Metrics
+                                          Ada
+                                            0-Throughput Metrics
+                                            1-Async Compute Triage
+                                            2-Top-Level Triage
+                                        
+  --multi-pass-metrics                  When enabled, additional hardware 
+                                        counters will be collected over 
+                                        multiple frames. Additional metrics 
+                                        based on these counters will be shown 
+                                        in the metrics tables, and richer 
+                                        expert-system advice will be shown in 
+                                        the Trace Analysis view.
+  --advanced-mode                       Alias of "multi-pass-metrics", 
+                                        deprecated
+  --lock-gpu-clocks arg (=1)            Lock GPU clocks during trace.
+  --disable-nvtx-ranges arg (=0)        Disables NVTX ranges. NVTX ranges allow
+                                        the application to create markers 
+                                        around queue submits using the NVTX 
+                                        API, however this may introduce 
+                                        additional overhead.
+  --collect-screenshot arg (=1)         When enabled, a screenshot of the 
+                                        target application will be collected 
+                                        and displayed in the Summary page.
+  --capture-screenshot arg              (deprecated). Same as 
+                                        collect-screenshot
+  --time-every-action                   When enabled, individual actions will 
+                                        be timed separately instead of being 
+                                        coalesced with adjacent actions of the 
+                                        same kind. Enabling this option will 
+                                        result in a performance penalty.
+  --real-time-shader-profiler           When enabled, source-level shader 
+                                        performance will be revealed per ~10 
+                                        usec interval in the Top-Down Calls 
+                                        table and other shader profiler views. 
+                                        Shader performance is collected via a 
+                                        high-speed sampling profiler in the SM 
+                                        hardware, which incurs no shader 
+                                        execution overhead at runtime, and only
+                                        consumes PCIe TX bandwidth (along with 
+                                        perf counters). When disabled, a more 
+                                        detailed list of SM and L1TEX perf 
+                                        counters will be collected.
+  --disable-collect-shader-pipelines    Disable collection of Shader Pipelines.
+                                        If Shader Pipeline collection is 
+                                        enabled the Shader Pipelines view will 
+                                        list all PSOs, shader code will be 
+                                        available for browsing, the Top-Down 
+                                        Calls tree will contain the static 
+                                        inlined call graph, and the Ray Tracing
+                                        Live State view will be populated. When
+                                          Shader Pipeline collection is 
+                                        disabled, the Shader Pipelines, Shader 
+                                        Source, and Top-Down Calls trees will 
+                                        be empty.
+  --disable-collect-external-shader-debug-info 
+                                        Disable collection of external shader 
+                                        debug info in the trace. If collection 
+                                        of external shader debug info is 
+                                        enabled, GPU Trace will try to resolve 
+                                        debug information for shaders without 
+                                        pre-embedded debug information on the 
+                                        target application. Any found debug 
+                                        information will be embedded in the 
+                                        trace report. 
+  --pc-samples-per-pm-interval-per-sm arg
+                                        The sampling interval in cycles, for 
+                                        the hardware sampling profiler in the 
+                                        SM. This is referenced to the GPC clock
+                                        frequency, which may run at the boost 
+                                        clock. If you see a warning message 
+                                        that the hardware dropped samples, try 
+                                        increasing this interval. Must be a 
+                                        power of 2; minimum 32.
+  --pm-bandwidth-limit arg              The maximum background traffic incurred
+                                        by PM Counters and Warp State Sampling.
+                                         
+  --disable-trace-shader-bindings       Disable collection of shader hashes as 
+                                        part of the trace.
+
+
